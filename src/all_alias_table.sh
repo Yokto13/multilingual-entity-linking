@@ -2,8 +2,8 @@
 
 set -ueo pipefail
 
-damuel="/home/farhand/damuel_spark_workdir"
-mewsli="/home/farhand/bc/data/mewsli/mewsli-9/output/dataset/"
+damuel=""
+mewsli=""
 only_wiki_links=true
 R=1
 lower=true
