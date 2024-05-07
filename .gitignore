@@ -1,3 +1,22 @@
+# ours
+*.json
+*slurm*
+.idea  
+*.zip
+*.parquet
+*.tsv
+*.csv 
+*.pth
+*.json
+*.xz
+throttle.*
+apicache
+
+src/experiments/models/runs/
+data/
+wandb/
+finetuning/models/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
