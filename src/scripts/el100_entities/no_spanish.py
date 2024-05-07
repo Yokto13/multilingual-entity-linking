@@ -16,10 +16,8 @@ sc = pyspark.SparkContext(conf=conf)
 
 spark = SparkSession.builder.config(conf=sc.getConf()).getOrCreate()
 
-damuel_workdir = Path("/home/farhand/mewsli_damuel_no_spanish")
-spanish = Path("/home/farhand/damuel_1.0/damuel_1.0_es")
-# damuel_workdir = Path("/home/farhand/damuel_test_spark")
-# damuel_workdir = Path("/home/farhand/damuel_spark_workdir")
+damuel_workdir = Path("path/to/all/damuels")
+spanish = Path("/path/to/damuel_1.0_es")
 
 language_count = defaultdict(int)
 language_qid_counts = defaultdict(dict)
