@@ -1,11 +1,11 @@
 from fire import Fire
 import wandb
 
-#from baselines.alias_table.one_language_lemma import alias_table_with_lemmas
-#from baselines.alias_table.from_tokens import one_language
+from baselines.alias_table.all_languages import all_languages
+from baselines.alias_table.one_language_lemma import alias_table_with_lemmas
+from baselines.alias_table.from_tokens import one_language
 
-#from data_processors.tokens.duplicates_filter import run_filter_duplicates
-#from data_processors.tokens.duplicates_filter_script import run_duplicates_filter_script
+from data_processors.tokens.duplicates_filter_script import run_duplicates_filter_script
 
 from finetunings.embs_generating.build_together_embs import generate_embs
 from finetunings.token_index.save_token_index import build_and_save_token_index
@@ -38,6 +38,8 @@ def choose_action(action):
             return alias_table_with_lemmas
         case "at_one":
             return one_language
+        case "at_all":
+            return all_languages
         case "recalls":
             return run_recall_calculation
         case "rename":
