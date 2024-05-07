@@ -12,10 +12,7 @@
 throttle.*
 apicache
 
-src/experiments/models/runs/
-data/
 wandb/
-finetuning/models/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
