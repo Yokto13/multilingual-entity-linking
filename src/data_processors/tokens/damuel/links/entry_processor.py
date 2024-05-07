@@ -13,7 +13,9 @@ class EntryProcessor:
         if "wiki" not in damuel_entry:
             return None
         wiki = damuel_entry["wiki"]
-        wiki_processor = WikiProcessorBoth(self.tokenizer_wrapper, wiki, self.only_wiki, self.qid_parser)
+        wiki_processor = WikiProcessorBoth(
+            self.tokenizer_wrapper, wiki, self.only_wiki, self.qid_parser
+        )
         return list(wiki_processor)
 
     def process_to_one(

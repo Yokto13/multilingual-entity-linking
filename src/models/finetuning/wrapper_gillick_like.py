@@ -3,6 +3,7 @@ import torch.nn as nn
 
 from models.finetuning.wrapper import FinetuningWrapper
 
+
 class FinetuningWrapperGillick(FinetuningWrapper):
     def __init__(self, model, softmax_multiplier, sigmoid_multiplier, sigmoid_offset):
         print("FinetuningWrapperGillick init called.")

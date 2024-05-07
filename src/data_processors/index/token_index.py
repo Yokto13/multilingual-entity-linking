@@ -17,13 +17,22 @@ from models.data.tokens_dataset import TokensDataset
 
 
 class TokenIndex(Index):
-    def __init__(self, embs, qids, tokens, attentions, scann_index=None, default_index_build=True, k=100):
+    def __init__(
+        self,
+        embs,
+        qids,
+        tokens,
+        attentions,
+        scann_index=None,
+        default_index_build=True,
+        k=100,
+    ):
         if default_index_build and scann_index is not None:
             raise ValueError("Cannot build index when index is already in arguments.")
         super().__init__(embs, qids, default_index_build=default_index_build)
 
         if scann_index is not None:
-            self.scann_index = scann_index 
+            self.scann_index = scann_index
 
         self.tokens = tokens
         self.attentions = attentions
@@ -33,7 +42,6 @@ class TokenIndex(Index):
         )
 
         print(embs.shape, qids.shape, tokens.shape, attentions.shape)
-
 
     @classmethod
     def from_dir(cls, path, max_per_qid=inf):
@@ -202,9 +210,7 @@ class TokenIndex(Index):
         return embs, qids, tokens, attentions
 
     @classmethod
-    def from_iterable_and_model(
-        cls, dataloader, model, max_per_qid=inf
-    ):
+    def from_iterable_and_model(cls, dataloader, model, max_per_qid=inf):
         raise NotImplementedError
 
     @classmethod
@@ -229,13 +235,17 @@ class TokenIndex(Index):
         tokens = np.array(tokens)
         attentions = np.array(attentions)
         embs = np.array(embs)
-        return cls(embs, qids, tokens, attentions, scann_index, default_index_build=False)
+        return cls(
+            embs, qids, tokens, attentions, scann_index, default_index_build=False
+        )
 
     def query(self, query_emb, qid, positive_cnt=3, neg_cnt=5) -> tuple[list, list]:
         query_emb = self.get_query_in_searchable_format(query_emb)  # batch + norm
 
-        pos_neighbors_inds, neg_neighbors_inds = self.neighbor_selector.exponential_pos_neg_indices(
-            query_emb, [qid], positive_cnt, neg_cnt
+        pos_neighbors_inds, neg_neighbors_inds = (
+            self.neighbor_selector.exponential_pos_neg_indices(
+                query_emb, [qid], positive_cnt, neg_cnt
+            )
         )
 
         pos_neighbors_inds = pos_neighbors_inds[0]
@@ -255,8 +265,10 @@ class TokenIndex(Index):
     ) -> list[tuple[list, list]]:
         query_embs = self.get_query_in_searchable_format(query_embs)  # batch + norm
 
-        pos_neighbors_inds, neg_neighbors_inds = self.neighbor_selector.exponential_pos_neg_indices(
-            query_embs, qids, positive_cnt, neg_cnt
+        pos_neighbors_inds, neg_neighbors_inds = (
+            self.neighbor_selector.exponential_pos_neg_indices(
+                query_embs, qids, positive_cnt, neg_cnt
+            )
         )
 
         for i in range(len(pos_neighbors_inds)):
@@ -326,11 +338,15 @@ class NeighborsSelector:
         neg_neighbors_inds = [[] for _ in range(len(query_embs))]
 
         num_neighbors = self.start_num_neighbors
-        while self._exists_with_not_enough_neighbors(pos_neighbors_inds, neg_neighbors_inds, expected_length):
-            pos_neighbors_inds, neg_neighbors_inds = self._attempt_to_get_inds(num_neighbors, query_embs, query_qids, positive_cnt, negative_cnt)
+        while self._exists_with_not_enough_neighbors(
+            pos_neighbors_inds, neg_neighbors_inds, expected_length
+        ):
+            pos_neighbors_inds, neg_neighbors_inds = self._attempt_to_get_inds(
+                num_neighbors, query_embs, query_qids, positive_cnt, negative_cnt
+            )
             num_neighbors = self._increase_neighbors(num_neighbors)
         return pos_neighbors_inds, neg_neighbors_inds
-    
+
     def _increase_neighbors(self, num_neighbors):
         if num_neighbors == self.embs_cnt:
             # cannot increase any more
@@ -343,7 +359,9 @@ class NeighborsSelector:
                 return True
         return False
 
-    def _attempt_to_get_inds(self, num_neighbors, query_embs, query_qids, positive_cnt, negative_cnt):
+    def _attempt_to_get_inds(
+        self, num_neighbors, query_embs, query_qids, positive_cnt, negative_cnt
+    ):
         neighbors, _ = self.scann_index.search_batched(
             query_embs, final_num_neighbors=num_neighbors
         )
@@ -368,7 +386,9 @@ class NeighborsSelector:
         if len(pos_neighbors_inds) < positive_cnt:
             missing_pos = positive_cnt - len(pos_neighbors_inds)
             pos_neighbors_no_sim = self._try_sampling_pos_without_sim(qid, missing_pos)
-            pos_neighbors_inds = np.concatenate([pos_neighbors_inds, pos_neighbors_no_sim])
+            pos_neighbors_inds = np.concatenate(
+                [pos_neighbors_inds, pos_neighbors_no_sim]
+            )
         if len(pos_neighbors_inds) < positive_cnt:
             missing_pos = positive_cnt - len(pos_neighbors_inds)
             neg_neighbors_inds = neg_neighbors_inds[: missing_pos + neg_cnt]

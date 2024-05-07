@@ -34,9 +34,7 @@ def filter_qids(qids, aliases, max_per_qid):
 def solve_batch(batch, aliases, qids, R, workers):
     batch_mentions = batch[0]
     batch_qids = np.array(batch[1])
-    dists = process.cdist(
-        batch_mentions, aliases, scorer=fuzz.QRatio, workers=workers
-    )
+    dists = process.cdist(batch_mentions, aliases, scorer=fuzz.QRatio, workers=workers)
     sorted_indices = np.argsort(-dists, axis=1)
     assert sorted_indices.shape[0] == len(batch_mentions)
     predicted_qids = qids[sorted_indices]
@@ -103,7 +101,9 @@ def string_similarity(
         damuel, only_wiki_links, use_xz=xz, lowercase=lowercase
     )
 
-    dam_mentions_names, dam_qids = filter_qids(dam_qids, dam_mentions_names, max_per_qid) 
+    dam_mentions_names, dam_qids = filter_qids(
+        dam_qids, dam_mentions_names, max_per_qid
+    )
 
     knowledge_base = build_mention_qid_map(dam_mentions_names, dam_qids, R)
 

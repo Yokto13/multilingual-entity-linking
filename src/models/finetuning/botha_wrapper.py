@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class BothaWrapper(nn.Module):
     def __init__(self, mentions_model, entities_model):
         print("BothaWrapper init called.")

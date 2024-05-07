@@ -170,17 +170,23 @@ def main(model_name, data_path, context_size, type, output_dir, workers=1):
         p.map(solve_with_output, iterators)
 
 
-def tokens_for_finetuning_mewsli(model_name, data_path, context_size, output_dir, workers):
+def tokens_for_finetuning_mewsli(
+    model_name, data_path, context_size, output_dir, workers
+):
     run_type = "mewsli_together"
     main(model_name, data_path, context_size, run_type, output_dir, workers)
 
 
-def tokens_for_finetuning_damuel_descriptions(model_name, data_path, context_size, output_dir, workers):
+def tokens_for_finetuning_damuel_descriptions(
+    model_name, data_path, context_size, output_dir, workers
+):
     run_type = "descs_together"
     main(model_name, data_path, context_size, run_type, output_dir, workers)
 
 
-def tokens_for_finetuning_damuel_links(model_name, data_path, context_size, output_dir, workers):
+def tokens_for_finetuning_damuel_links(
+    model_name, data_path, context_size, output_dir, workers
+):
     run_type = "links_together"
     main(model_name, data_path, context_size, run_type, output_dir, workers)
 

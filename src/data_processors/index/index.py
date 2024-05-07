@@ -15,9 +15,8 @@ import scann
 
 class Index:
     """Wrapper around scann for easier build"""
-    def __init__(
-        self, embs, qids, default_index_build=True
-    ):
+
+    def __init__(self, embs, qids, default_index_build=True):
         self.embs = embs
 
         self.embs = self.embs / np.linalg.norm(self.embs, axis=1, keepdims=True)
@@ -63,9 +62,7 @@ class Index:
         return cls(all_embs, all_qids)
 
     @classmethod
-    def from_iterable_and_model(
-        cls, dataloader, model, max_per_qid=inf
-    ):
+    def from_iterable_and_model(cls, dataloader, model, max_per_qid=inf):
         all_embs, all_qids, all_return_embs = [], [], []
         qid_counter = defaultdict(int)
 
@@ -132,8 +129,12 @@ class Index:
     ):
         training_sample_size = int(min(0.5 * len(self.embs), training_sample_size))
         num_leaves = min(num_leaves, training_sample_size)
-        n_of_clusters = min(training_sample_size, 100)  # so we can test with tiny datasets
-        builder = scann.scann_ops_pybind.builder(self.embs, n_of_clusters, "dot_product").tree(
+        n_of_clusters = min(
+            training_sample_size, 100
+        )  # so we can test with tiny datasets
+        builder = scann.scann_ops_pybind.builder(
+            self.embs, n_of_clusters, "dot_product"
+        ).tree(
             num_leaves=num_leaves,
             num_leaves_to_search=num_leaves_to_search,
             training_sample_size=training_sample_size,
@@ -152,4 +153,3 @@ class Index:
 
     def __len__(self):
         return len(self.embs)
-

@@ -1,7 +1,7 @@
 from data_processors.tokens.tokens_cutter import TokensCutter
 from data_processors.tokens.mewsli.tokens_iterator import (
     MewsliTokensIterator,
-    ContextMewsliTokensIterator
+    ContextMewsliTokensIterator,
 )
 
 
@@ -14,7 +14,7 @@ class MewsliTokensIteratorFinetuning(MewsliTokensIterator):
         expected_size=64,
         treat_qids_as_ints=True,
         mention_token="[M]",
-    ):  
+    ):
         self.mention_token = mention_token
         tokenizer.add_special_tokens({"cls_token": mention_token})
         super().__init__(
@@ -45,7 +45,7 @@ class ContextMewsliTokensIteratorFinetuning(ContextMewsliTokensIterator):
         )
         try:
             cutted = token_cutter.cut_mention_with_context(mention_slice)
-        except ValueError: # one span in Tamil Mewsli appears invalid
+        except ValueError:  # one span in Tamil Mewsli appears invalid
             print("error in mewsli span")
             cutted = token_cutter.tokenizer(
                 "",

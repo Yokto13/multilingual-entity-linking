@@ -144,9 +144,9 @@ def get_scann_index(embs, qids):
 
 
 def filter_repeated_embs(damuel_embs, damuel_qids, R):
-    """ Removes embeddings that are the same.
-    
-        Very optional thing, saves some memory, especially when mentions without context are used.
+    """Removes embeddings that are the same.
+
+    Very optional thing, saves some memory, especially when mentions without context are used.
     """
     if not damuel_embs.flags["C_CONTIGUOUS"]:  # need this for sha1 to work
         damuel_embs = np.ascontiguousarray(damuel_embs)
@@ -158,7 +158,6 @@ def filter_repeated_embs(damuel_embs, damuel_qids, R):
     # keep only top R qids per emb
     for emb_hash, qid_counter in emb_qid_d.items():
         emb_qid_d[emb_hash] = [qid for qid, _ in qid_counter.most_common(R)]
-
 
     new_embs, new_qids = [], []
     for emb, qid in zip(damuel_embs, damuel_qids):
@@ -184,11 +183,10 @@ def find_recall(
     R = min(R, len(damuel_qids))
     # damuel_embs, damuel_qids = filter_repeated_embs(damuel_embs, damuel_qids, R)
 
-
     mewsli_embs, mewsli_qids = load_mewsli(mewsli)
 
     print(damuel_embs.shape, damuel_qids.shape)
-    scann_index = get_scann_index(damuel_embs, damuel_qids) 
+    scann_index = get_scann_index(damuel_embs, damuel_qids)
     rc = RecallCalculator(scann_index, damuel_qids)
 
     print("Calculating recall...")

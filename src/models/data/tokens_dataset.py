@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset
 from models.data.mention_qid_pair import MentionQidPair
 
+
 class TokensDataset(Dataset):
     def __init__(self, tokens_list: list[MentionQidPair]):
         self.tokens_list = tokens_list

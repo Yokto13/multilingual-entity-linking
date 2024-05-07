@@ -4,10 +4,11 @@ from itertools import zip_longest
 
 
 def paths_exist(path_arg_ids: list):
-    """ Controlls that a path exists before calling the function
-    
-        path_arg_ids: list of indexes of the arguments that are valid paths.
+    """Controlls that a path exists before calling the function
+
+    path_arg_ids: list of indexes of the arguments that are valid paths.
     """
+
     def _paths_exist(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
@@ -25,7 +26,8 @@ def paths_exist(path_arg_ids: list):
 
 
 def ensure_datatypes(args_constructors: list, kwargs_constructors: dict):
-    """ Applys constructor functions to the arguments before calling the function"""
+    """Applys constructor functions to the arguments before calling the function"""
+
     def _ensure_datatypes(f):
         @wraps(f)
         def wrapper(*args, **kwargs):

@@ -1,4 +1,5 @@
 """ Filters embeddings and QIDs that should be in the final KB. """
+
 from collections import defaultdict
 
 import json
@@ -7,6 +8,7 @@ from pathlib import Path
 
 from fire import Fire
 from tqdm import tqdm
+
 
 def filter_embs(source_dir: Path, dest_dir: Path, wanted: list[int]):
     for fn in tqdm(source_dir.iterdir()):
@@ -28,7 +30,7 @@ def filter_embs(source_dir: Path, dest_dir: Path, wanted: list[int]):
 
 
 def load_wanted(path_to_wanted: Path):
-    with open(path_to_wanted, 'r') as f:
+    with open(path_to_wanted, "r") as f:
         qid_loc_pair = json.load(f)
     wanted = defaultdict(list)
     for qid, lang in qid_loc_pair.items():

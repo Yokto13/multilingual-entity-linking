@@ -21,6 +21,7 @@ from tokenization.generate_tokens import (
     tokens_for_finetuning_damuel_links,
 )
 
+
 def choose_action(action):
     match action:
         case "embs":
@@ -50,7 +51,7 @@ def choose_action(action):
         case "remove_duplicates":
             return remove_duplicates
         case "filter_duplicates":
-            return run_filter_duplicates 
+            return run_filter_duplicates
         case "filter_duplicates_script":
             return run_duplicates_filter_script
         case "tokens_mewsli":
@@ -64,13 +65,7 @@ def choose_action(action):
 
 
 def main(*args):
-    wandb.init(
-        project=f"test-{args[0]}",
-        config = {
-            "action": args[0],
-            "args": args[1:]
-        }
-    )
+    wandb.init(project=f"test-{args[0]}", config={"action": args[0], "args": args[1:]})
     action_descriptor = args[0]
     action = choose_action(action_descriptor)
     print(f"Running {action_descriptor} with args {args[1:]}")
