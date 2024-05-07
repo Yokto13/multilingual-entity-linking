@@ -43,7 +43,18 @@ class ContextMewsliTokensIteratorFinetuning(ContextMewsliTokensIterator):
             self.mewsli_tokens_itarator.tokenizer,
             self.mewsli_tokens_itarator.expected_size,
         )
-        return token_cutter.cut_mention_with_context(mention_slice)
+        try:
+            cutted = token_cutter.cut_mention_with_context(mention_slice)
+        except ValueError: # one span in Tamil Mewsli appears invalid
+            print("error in mewsli span")
+            cutted = token_cutter.tokenizer(
+                "",
+                return_tensors="pt",
+                padding="max_length",
+                truncation=True,
+                max_length=self.expected_size,
+            )
+        return cutted
 
     def _add_class_token(self, text, mention_slice):
         new_text = f"{text[:mention_slice.start]}{self.mewsli_tokens_itarator.mention_token} {text[mention_slice]} {self.mewsli_tokens_itarator.mention_token}{text[mention_slice.stop:]}"
