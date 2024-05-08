@@ -12,13 +12,6 @@ from transformers import BertTokenizerFast
 
 sys.path.append("/home/farhand/bc/src")
 
-# from models.data.damuel_tokens import (
-#     LinksTokensIteratorBoth,
-#     DescriptionTokensIteratorBoth,
-#     LinksTokensIteratorFinetuning,
-#     DescriptionTokensIteratorFinetuning,
-# )
-
 from data_processors.tokens.damuel.descriptions.both import (
     DamuelDescriptionsTokensIteratorBoth,
 )
@@ -39,7 +32,7 @@ from src.data_processors.tokens.mewsli.for_finetuning import (
 per_save = 10**4
 
 
-def save_to_file2(entity_names, mentions, output_dir):
+def entity_names_save(entity_names, mentions, output_dir):
     hv = abs(hash(abs(hash(mentions[0])) + abs(hash(mentions[-1]))))
 
     print(f"Saving to file {hv}")
@@ -50,7 +43,7 @@ def save_to_file2(entity_names, mentions, output_dir):
         pickle.dump(mentions, f)
 
 
-def save_to_file(mentions, output_dir, name="mentions"):
+def mentions_save(mentions, output_dir, name="mentions"):
     hv = abs(hash(abs(hash(mentions[0])) + abs(hash(mentions[-1]))))
 
     print(f"Saving to file {hv}")
@@ -107,11 +100,11 @@ def solve(iterator, output_dir):
         mentions.append(context)
 
         if len(entity_names) == per_save:
-            save_to_file2(entity_names, mentions, output_dir)
+            entity_names_save(entity_names, mentions, output_dir)
             entity_names = []
             mentions = []
 
-    save_to_file2(entity_names, mentions, output_dir)
+    entity_names_save(entity_names, mentions, output_dir)
 
 
 def solve_only_contexts(iterator, output_dir):
@@ -121,10 +114,10 @@ def solve_only_contexts(iterator, output_dir):
         mentions.append(context)
 
         if len(mentions) == per_save:
-            save_to_file(mentions, output_dir)
+            mentions_save(mentions, output_dir)
             mentions = []
 
-    save_to_file(mentions, output_dir)
+    mentions_save(mentions, output_dir)
 
 
 def solve_only_names(iterator, output_dir):
@@ -133,10 +126,10 @@ def solve_only_names(iterator, output_dir):
         entity_names.append(entity_name)
 
         if len(entity_names) == per_save:
-            save_to_file(entity_names, output_dir, name="entity_names")
+            mentions_save(entity_names, output_dir, name="entity_names")
             entity_names = []
 
-    save_to_file(entity_names, output_dir, name="entity_names")
+    mentions_save(entity_names, output_dir, name="entity_names")
 
 
 def main(model_name, data_path, context_size, type, output_dir, workers=1):

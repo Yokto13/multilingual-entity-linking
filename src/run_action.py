@@ -50,8 +50,6 @@ def choose_action(action):
             return rename
         case "remove_duplicates":
             return remove_duplicates
-        case "filter_duplicates":
-            return run_filter_duplicates
         case "filter_duplicates_script":
             return run_duplicates_filter_script
         case "tokens_mewsli":
