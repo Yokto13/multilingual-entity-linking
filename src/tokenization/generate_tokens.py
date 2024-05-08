@@ -159,6 +159,8 @@ def main(model_name, data_path, context_size, type, output_dir, workers=1):
 
     solve_with_output = partial(solve_f, output_dir=output_dir)
 
+    print(f"Running with {workers} workers")
+
     with multiprocessing.Pool(workers) as p:
         p.map(solve_with_output, iterators)
 
