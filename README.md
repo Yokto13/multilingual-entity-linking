@@ -51,3 +51,7 @@ The most useful actions are:
 **tokens_links** - Generate tokens for links from the DaMuEL dataset.
 
 The `src` directory also contains bash scripts that wrap some of the actions to make their usage easier.
+
+Note, that we use [wandb](https://wandb.ai/home) to log our experiments. 
+In either to run the code you have to log in to your wandb account or disable it by removing it from `run_action.py`
+and grepping and removing all ocurrences of wandb.log(metric) from the source codes.
