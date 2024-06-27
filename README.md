@@ -1,6 +1,6 @@
 # Multilingual Entity Linking Using Dense Retrieval
 
-This repository contains source code experiments from the thesis "Multilingual Entity Linking Using Dense Retrieval".
+This repository contains source code experiments from the thesis [Multilingual Entity Linking Using Dense Retrieval](https://arxiv.org/abs/2406.16892).
 
 ## Getting the Data
 
